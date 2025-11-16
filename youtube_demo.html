@@ -72,7 +72,6 @@
         /* --- 1. Lock Screen --- */
         #lock-screen-initial,
         #lock-screen-notification {
-            /* CHANGED: Background color set to #212121 */
             background-color: #212121;
             color: white;
         }
@@ -82,16 +81,14 @@
             height: 100%;
             display: flex;
             flex-direction: column;
-            /* CHANGED: Centered all content */
             align-items: center;
-            justify-content: center; /* Center vertically */
+            justify-content: center;
             padding: 70px 30px;
             position: relative;
             box-sizing: border-box;
         }
 
         .lock-time {
-            /* CHANGED: Centered, white text */
             font-size: 80px;
             font-weight: 300;
             margin-bottom: 0;
@@ -100,7 +97,6 @@
         }
 
         .lock-date {
-            /* CHANGED: Centered, white text */
             font-size: 18px;
             font-weight: 500;
             color: #ffffff;
@@ -110,7 +106,6 @@
         }
 
         .lock-weather {
-            /* NEW: Weather display */
             display: flex;
             align-items: center;
             color: #ffffff;
@@ -142,9 +137,8 @@
 
         /* --- 2. Notification --- */
         .notification-wrapper {
-            /* NEW: Wrapper to hold notification */
             width: 100%;
-            padding-top: 50px; /* Space down from time/date/weather */
+            padding-top: 50px; 
             display: flex;
             justify-content: center;
         }
@@ -170,7 +164,6 @@
         }
         
         .notification-avatar {
-            /* NEW: Custom YT avatar */
             width: 20px;
             height: 20px;
             background-color: #FF0033;
@@ -198,13 +191,12 @@
             background-color: #f7f9fc;
         }
         
-        /* NEW: Status Bar */
         .status-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 12px 20px 10px 20px;
-            height: 22px; /* Total height is 44px with padding */
+            height: 22px; 
             background-color: #f7f9fc;
             width: 100%;
             box-sizing: border-box;
@@ -242,8 +234,6 @@
             padding: 20px;
             display: flex;
             align-items: center;
-            /* CHANGED: Removed top padding */
-            /* border-bottom: 1px solid #e0e0e0; */ /* Handled by status bar */
             position: sticky;
             top: 0;
         }
@@ -251,7 +241,6 @@
         .messages-header .avatar {
             width: 36px;
             height: 36px;
-            /* CHANGED: Color updated to #FF0033 and text to YT */
             background-color: #FF0033;
             color: white;
             border-radius: 50%;
@@ -259,7 +248,7 @@
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 16px; /* Fits 'YT' */
+            font-size: 16px; 
             margin-left: 16px;
             margin-right: 12px;
         }
@@ -374,8 +363,8 @@
 
             <div class="screen-content active" id="lock-screen-initial">
                 <div class="lock-screen-overlay">
-                    <h1 class="lock-time">04 50</h1>
-                    <h2 class="lock-date">SUN, NOV 16</h2>
+                    <h1 class="lock-time" id="lock-time-initial">04 50</h1>
+                    <h2 class="lock-date" id="lock-date-initial">SUN, NOV 16</h2>
                     <div class="lock-weather">
                         <svg viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM12 15c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm0-10c-0.55 0-1 0.45-1 1v1c0 0.55 0.45 1 1 1s1-0.45 1-1v-1c0-0.55-0.45-1-1-1zM12 19c-0.55 0-1 0.45-1 1v1c0 0.55 0.45 1 1 1s1-0.45 1-1v-1c0-0.55-0.45-1-1-1zM5.64 6.64c-0.39-0.39-1.02-0.39-1.41 0s-0.39 1.02 0 1.41l1.06 1.06c0.39 0.39 1.02 0.39 1.41 0s0.39-1.02 0-1.41l-1.06-1.06zM17.3 18.36c-0.39-0.39-1.02-0.39-1.41 0s-0.39 1.02 0 1.41l1.06 1.06c0.39 0.39 1.02 0.39 1.41 0s0.39-1.02 0-1.41l-1.06-1.06zM19.36 5.64c-0.39-0.39-1.02-0.39-1.41 0s-0.39 1.02 0 1.41l1.06 1.06c0.39 0.39 1.02 0.39 1.41 0s0.39-1.02 0-1.41l-1.06-1.06zM6.7 18.36c-0.39-0.39-1.02-0.39-1.41 0s-0.39 1.02 0 1.41l1.06 1.06c0.39 0.39 1.02 0.39 1.41 0s0.39-1.02 0-1.41l-1.06-1.06zM4 11c-0.55 0-1 0.45-1 1s0.45 1 1 1h1c0.55 0 1-0.45 1-1s-0.45-1-1-1h-1zM19 11c-0.55 0-1 0.45-1 1s0.45 1 1 1h1c0.55 0 1-0.45 1-1s-0.45-1-1-1h-1z"></path></svg>
                         57&deg;F
@@ -386,8 +375,8 @@
 
             <div class="screen-content" id="lock-screen-notification" onclick="openMessages()">
                 <div class="lock-screen-overlay">
-                    <h1 class="lock-time">04 50</h1>
-                    <h2 class="lock-date">SUN, NOV 16</h2>
+                    <h1 class="lock-time" id="lock-time-notify">04 50</h1>
+                    <h2 class="lock-date" id="lock-date-notify">SUN, NOV 16</h2>
                     <div class="lock-weather">
                         <svg viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM12 15c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm0-10c-0.55 0-1 0.45-1 1v1c0 0.55 0.45 1 1 1s1-0.45 1-1v-1c0-0.55-0.45-1-1-1zM12 19c-0.55 0-1 0.45-1 1v1c0 0.55 0.45 1 1 1s1-0.45 1-1v-1c0-0.55-0.45-1-1-1zM5.64 6.64c-0.39-0.39-1.02-0.39-1.41 0s-0.39 1.02 0 1.41l1.06 1.06c0.39 0.39 1.02 0.39 1.41 0s0.39-1.02 0-1.41l-1.06-1.06zM17.3 18.36c-0.39-0.39-1.02-0.39-1.41 0s-0.39 1.02 0 1.41l1.06 1.06c0.39 0.39 1.02 0.39 1.41 0s0.39-1.02 0-1.41l-1.06-1.06zM19.36 5.64c-0.39-0.39-1.02-0.39-1.41 0s-0.39 1.02 0 1.41l1.06 1.06c0.39 0.39 1.02 0.39 1.41 0s0.39-1.02 0-1.41l-1.06-1.06zM6.7 18.36c-0.39-0.39-1.02-0.39-1.41 0s-0.39 1.02 0 1.41l1.06 1.06c0.39 0.39 1.02 0.39 1.41 0s0.39-1.02 0-1.41l-1.06-1.06zM4 11c-0.55 0-1 0.45-1 1s0.45 1 1 1h1c0.55 0 1-0.45 1-1s-0.45-1-1-1h-1zM19 11c-0.55 0-1 0.45-1 1s0.45 1 1 1h1c0.55 0 1-0.45 1-1s-0.45-1-1-1h-1z"></path></svg>
                         57&deg;F
@@ -464,7 +453,13 @@
         const chatInput = document.getElementById('chat-input');
         const chatContainer = document.getElementById('chat-container');
         const typingIndicator = document.getElementById('typing-indicator');
-        const statusBarTime = document.getElementById('status-bar-time');
+        
+        // --- CHANGED: Get all time/date elements ---
+        const statusBarTimeEl = document.getElementById('status-bar-time');
+        const lockTimeInitialEl = document.getElementById('lock-time-initial');
+        const lockDateInitialEl = document.getElementById('lock-date-initial');
+        const lockTimeNotifyEl = document.getElementById('lock-time-notify');
+        const lockDateNotifyEl = document.getElementById('lock-date-notify');
 
         // --- State ---
         let chatState = 0; // Controls the flow of the conversation
@@ -479,11 +474,7 @@
             const bubble = document.createElement('div');
             bubble.className = `message-bubble ${sender}`;
             bubble.innerHTML = message; // Use innerHTML to render 🏈 emoji
-            
-            // Insert before the typing indicator
             chatContainer.insertBefore(bubble, typingIndicator);
-            
-            // Scroll to bottom
             chatContainer.scrollTop = chatContainer.scrollHeight;
         }
 
@@ -496,12 +487,28 @@
             typingIndicator.style.display = 'none';
         }
         
-        function updateTime() {
+        // --- CHANGED: New function to update all clocks ---
+        function updateAllClocks() {
             const now = new Date();
-            const time = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
-            if (statusBarTime) {
-                statusBarTime.innerText = time;
-            }
+            
+            // Format for lock screen time: "04 50"
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const lockTimeString = `${hours} ${minutes}`;
+            
+            // Format for lock screen date: "SUN, NOV 16"
+            const dateOptions = { weekday: 'short', month: 'short', day: 'numeric' };
+            const lockDateString = now.toLocaleDateString('en-US', dateOptions).toUpperCase();
+            
+            // Format for status bar time: "4:50 PM"
+            const statusBarTimeString = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+
+            // Set all elements
+            if (lockTimeInitialEl) lockTimeInitialEl.innerText = lockTimeString;
+            if (lockDateInitialEl) lockDateInitialEl.innerText = lockDateString;
+            if (lockTimeNotifyEl) lockTimeNotifyEl.innerText = lockTimeString;
+            if (lockDateNotifyEl) lockDateNotifyEl.innerText = lockDateString;
+            if (statusBarTimeEl) statusBarTimeEl.innerText = statusBarTimeString;
         }
 
         // --- Demo Flow Functions ---
@@ -518,8 +525,8 @@
         function openMessages() {
             if (chatState === 1) {
                 showScreen(messagesApp);
-                updateTime(); // Set the time when app opens
-                // Add first marketing message
+                updateAllClocks(); // Ensure status bar time is set on open
+                
                 setTimeout(() => {
                     addMessage(
                         "Hey Alex! Big news! 🏈 Don't just watch the highlights—get *every game, every Sunday* with NFL Sunday Ticket. It's awesome! Reply 'ADD' to get in on the action or 'HELP' if you have questions.",
@@ -534,16 +541,14 @@
         chatForm.addEventListener('submit', function(e) {
             e.preventDefault();
             const userText = chatInput.value;
-            if (!userText) return; // Don't send empty messages
+            if (!userText) return; 
 
             addMessage(userText, 'user');
             chatInput.value = '';
-
-            // --- State Machine for Replies ---
             
             // User sent first message ("in-market games?")
             if (chatState === 2) {
-                chatState = 3; // Prevents double-sends
+                chatState = 3; 
                 showTyping();
                 setTimeout(() => {
                     hideTyping();
@@ -552,11 +557,11 @@
                         "agent"
                     );
                     chatState = 4; // Ready for user's second reply
-                }, 1500); // 1.5s delay
+                }, 1500); 
             }
             // User sent second message ("brother in college?")
             else if (chatState === 4) {
-                chatState = 5; // Prevents double-sends
+                chatState = 5; 
                 showTyping();
                 setTimeout(() => {
                     hideTyping();
@@ -566,7 +571,7 @@
                     );
                     chatState = 6; // Ready for human agent
                     hotspotBottom.style.display = 'block'; // Show the bottom hotspot (HOTSPOT 2)
-                }, 1500); // 1.5s delay
+                }, 1500); 
             }
         });
 
@@ -583,10 +588,15 @@
                         "Hey Alex! Sarah here. I see your question about sharing. Great news—you can create a Google Family Group and share your YouTube TV (including Sunday Ticket) with up to 5 family members. Can I get that Sunday Ticket added for you right now so you're all set for kickoff?",
                         "agent"
                     );
-                }, 1500); // 1.5s delay
+                }, 1500); 
             }
         }
         
+        // --- CHANGED: Call the clock update function on page load ---
+        updateAllClocks();
+        // Also update it every 10 seconds to keep it fresh if the demo sits on the lock screen
+        setInterval(updateAllClocks, 10000); 
+
     </script>
 </body>
 </html>
