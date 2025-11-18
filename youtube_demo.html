@@ -8,7 +8,13 @@
         /* --- Basic Setup --- */
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f0f2f5;
+            /* CHANGED: Updated to your specific background image */
+            background-image: url('https://i.imgur.com/Fuu98EC.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed; /* Keeps background static while scrolling */
+            
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -16,6 +22,7 @@
             padding: 50px;
             min-height: 100vh;
             box-sizing: border-box;
+            margin: 0; 
         }
 
         /* --- Hidden Hotspots --- */
@@ -36,11 +43,12 @@
         /* --- Mobile Device Frame (Pixel) --- */
         .mobile-frame {
             width: 390px;
-            height: 804px; /* Your requested height */
+            height: 804px;
             background-color: #111;
             border-radius: 40px;
             border: 10px solid #111;
-            box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+            /* Added a stronger shadow to make it pop against the image background */
+            box-shadow: 0 19px 38px rgba(0,0,0,0.50), 0 15px 12px rgba(0,0,0,0.32);
             position: relative;
             overflow: hidden;
         }
@@ -454,7 +462,6 @@
         const chatContainer = document.getElementById('chat-container');
         const typingIndicator = document.getElementById('typing-indicator');
         
-        // --- CHANGED: Get all time/date elements ---
         const statusBarTimeEl = document.getElementById('status-bar-time');
         const lockTimeInitialEl = document.getElementById('lock-time-initial');
         const lockDateInitialEl = document.getElementById('lock-date-initial');
@@ -487,7 +494,6 @@
             typingIndicator.style.display = 'none';
         }
         
-        // --- CHANGED: New function to update all clocks ---
         function updateAllClocks() {
             const now = new Date();
             
@@ -503,7 +509,6 @@
             // Format for status bar time: "4:50 PM"
             const statusBarTimeString = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
 
-            // Set all elements
             if (lockTimeInitialEl) lockTimeInitialEl.innerText = lockTimeString;
             if (lockDateInitialEl) lockDateInitialEl.innerText = lockDateString;
             if (lockTimeNotifyEl) lockTimeNotifyEl.innerText = lockTimeString;
@@ -525,7 +530,7 @@
         function openMessages() {
             if (chatState === 1) {
                 showScreen(messagesApp);
-                updateAllClocks(); // Ensure status bar time is set on open
+                updateAllClocks();
                 
                 setTimeout(() => {
                     addMessage(
@@ -592,9 +597,7 @@
             }
         }
         
-        // --- CHANGED: Call the clock update function on page load ---
         updateAllClocks();
-        // Also update it every 10 seconds to keep it fresh if the demo sits on the lock screen
         setInterval(updateAllClocks, 10000); 
 
     </script>
