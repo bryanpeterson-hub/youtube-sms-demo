@@ -8,7 +8,6 @@
         /* --- Basic Setup --- */
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            /* CHANGED: Background image added */
             background-image: url('https://i.imgur.com/Fuu98EC.png');
             background-size: cover;
             background-position: center;
@@ -479,7 +478,7 @@
 
         // --- State ---
         // chatState: 0=Initial, 1=NotificationShown, 2=InitialMessage, 4=After Agent Reply 1 (Games), 5=After Agent Reply 2 (Escalation)
-        // New States: 6=After Sarah's reply, 7=After Alex's YES, 8=After Agent Confirmation, 9=After Alex's Thanks, 10=After Music Upsell
+        // New States: 6=After Sarah's reply, 8=After Agent Confirmation, 10=After Music Upsell
         let chatState = 0; 
 
         // --- Utility Functions ---
@@ -546,7 +545,7 @@
                         "agent"
                     );
                     chatState = 2; // Ready for user's first reply (in-market games)
-                }, 500); 
+                }, 500); // 0.5s delay to simulate loading
             }
         }
 
