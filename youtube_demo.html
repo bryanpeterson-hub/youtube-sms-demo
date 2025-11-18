@@ -33,10 +33,9 @@
             /* border: 2px dashed red; */
         }
         
+        /* FIX 1: Removed 'display: none' from CSS. Hotspot visibility is now JS controlled. */
         #hotspot-bottom {
-            display: none; /* Hidden until the right step */
-            /* Uncomment the line below to see the hotspot area during testing */
-            /* border: 2px dashed blue; */
+            /* Hotspot is managed by JS */
         }
 
         /* --- Mobile Device Frame (Pixel) --- */
@@ -597,7 +596,9 @@
                         "Gotcha! That's about family sharing, which can get specific. I'm going to connect you with one of our human team members who can check your account details and get you the *perfect* answer. Hang tight, they'll be right with you in this chat!",
                         "agent"
                     );
-                    // chatState remains 5, waiting for Hotspot (Sarah) to click
+                    // FIX 2: Reveal the bottom hotspot after AI escalation
+                    hotspotBottom.style.display = 'block'; 
+                    chatState = 5; // State remains 5, waiting for Hotspot (Sarah) click
                 }, 1500); 
             }
             // State 6: User accepts purchase (YES, OK, etc.)
@@ -624,7 +625,6 @@
                     const musicUpsellMessage = "BTW, you're eligible for a promotional discount on YouTube Music Premium. You can add that here: <a href='https://music.youtube.com/music_premium' target='_blank'>https://goo.gl/MusicPremiumPromo</a>";
                     addMessage(musicUpsellMessage, "agent");
                     chatState = 10; // Demo complete
-                    // Optionally hide the input field here
                 }, 1500); 
             }
         });
