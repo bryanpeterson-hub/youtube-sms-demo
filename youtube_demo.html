@@ -8,12 +8,12 @@
         /* --- Basic Setup --- */
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            /* CHANGED: Updated to your specific background image */
+            /* CHANGED: Background image added */
             background-image: url('https://i.imgur.com/Fuu98EC.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            background-attachment: fixed; /* Keeps background static while scrolling */
+            background-attachment: fixed;
             
             display: flex;
             flex-direction: column;
@@ -47,7 +47,6 @@
             background-color: #111;
             border-radius: 40px;
             border: 10px solid #111;
-            /* Added a stronger shadow to make it pop against the image background */
             box-shadow: 0 19px 38px rgba(0,0,0,0.50), 0 15px 12px rgba(0,0,0,0.32);
             position: relative;
             overflow: hidden;
@@ -64,7 +63,7 @@
 
         /* --- Screen Content --- */
         .screen-content {
-            display: none; /* Hide all screens by default */
+            display: none; 
             width: 100%;
             height: 100%;
             position: absolute;
@@ -286,6 +285,16 @@
             width: -moz-fit-content;
             width: fit-content;
         }
+        
+        /* Ensures links inside chat bubbles are readable */
+        .message-bubble a {
+            color: #fff; 
+            text-decoration: underline;
+        }
+        .agent a {
+            color: #1a73e8; /* Standard blue link in non-user bubble */
+        }
+
 
         .agent {
             background-color: #e8eaed;
@@ -469,7 +478,9 @@
         const lockDateNotifyEl = document.getElementById('lock-date-notify');
 
         // --- State ---
-        let chatState = 0; // Controls the flow of the conversation
+        // chatState: 0=Initial, 1=NotificationShown, 2=InitialMessage, 4=After Agent Reply 1 (Games), 5=After Agent Reply 2 (Escalation)
+        // New States: 6=After Sarah's reply, 7=After Alex's YES, 8=After Agent Confirmation, 9=After Alex's Thanks, 10=After Music Upsell
+        let chatState = 0; 
 
         // --- Utility Functions ---
         function showScreen(screen) {
@@ -480,7 +491,7 @@
         function addMessage(message, sender) {
             const bubble = document.createElement('div');
             bubble.className = `message-bubble ${sender}`;
-            bubble.innerHTML = message; // Use innerHTML to render 🏈 emoji
+            bubble.innerHTML = message; 
             chatContainer.insertBefore(bubble, typingIndicator);
             chatContainer.scrollTop = chatContainer.scrollHeight;
         }
@@ -497,16 +508,13 @@
         function updateAllClocks() {
             const now = new Date();
             
-            // Format for lock screen time: "04 50"
             const hours = now.getHours().toString().padStart(2, '0');
             const minutes = now.getMinutes().toString().padStart(2, '0');
             const lockTimeString = `${hours} ${minutes}`;
             
-            // Format for lock screen date: "SUN, NOV 16"
             const dateOptions = { weekday: 'short', month: 'short', day: 'numeric' };
             const lockDateString = now.toLocaleDateString('en-US', dateOptions).toUpperCase();
             
-            // Format for status bar time: "4:50 PM"
             const statusBarTimeString = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
 
             if (lockTimeInitialEl) lockTimeInitialEl.innerText = lockTimeString;
@@ -537,12 +545,28 @@
                         "Hey Alex! Big news! 🏈 Don't just watch the highlights—get *every game, every Sunday* with NFL Sunday Ticket. It's awesome! Reply 'ADD' to get in on the action or 'HELP' if you have questions.",
                         "agent"
                     );
-                    chatState = 2; // Ready for user's first reply
-                }, 500); // 0.5s delay to simulate loading
+                    chatState = 2; // Ready for user's first reply (in-market games)
+                }, 500); 
             }
         }
 
-        // 3. User Clicks Send
+        // 3. Hotspot Click -> Show Human Agent Reply (Sarah)
+        function showHumanReply() {
+            if (chatState === 5) { // After AI escalation
+                hotspotBottom.style.display = 'none';
+                showTyping();
+                setTimeout(() => {
+                    hideTyping();
+                    addMessage(
+                        "Hey Alex! Sarah here. I see your question about sharing. Great news—you can create a Google Family Group and share your YouTube TV (including Sunday Ticket) with up to 5 family members. Can I get that Sunday Ticket added for you right now so you're all set for kickoff?",
+                        "agent"
+                    );
+                    chatState = 6; // READY for Alex's acceptance/purchase confirmation
+                }, 1500);
+            }
+        }
+
+        // 4. User Clicks Send (The main state machine)
         chatForm.addEventListener('submit', function(e) {
             e.preventDefault();
             const userText = chatInput.value;
@@ -551,7 +575,7 @@
             addMessage(userText, 'user');
             chatInput.value = '';
             
-            // User sent first message ("in-market games?")
+            // State 2: User asks about in-market games
             if (chatState === 2) {
                 chatState = 3; 
                 showTyping();
@@ -561,10 +585,10 @@
                         "Awesome question! You're all set for local games—those are already part of your YouTube TV plan. NFL Sunday Ticket is the key to unlocking *all* the out-of-market Sunday games. It's basically every NFL fan's dream!",
                         "agent"
                     );
-                    chatState = 4; // Ready for user's second reply
+                    chatState = 4; // Ready for user's second reply (college dorm question)
                 }, 1500); 
             }
-            // User sent second message ("brother in college?")
+            // State 4: User asks complex question (college dorm sharing)
             else if (chatState === 4) {
                 chatState = 5; 
                 showTyping();
@@ -574,28 +598,38 @@
                         "Gotcha! That's about family sharing, which can get specific. I'm going to connect you with one of our human team members who can check your account details and get you the *perfect* answer. Hang tight, they'll be right with you in this chat!",
                         "agent"
                     );
-                    chatState = 6; // Ready for human agent
-                    hotspotBottom.style.display = 'block'; // Show the bottom hotspot (HOTSPOT 2)
+                    // chatState remains 5, waiting for Hotspot (Sarah) to click
+                }, 1500); 
+            }
+            // State 6: User accepts purchase (YES, OK, etc.)
+            else if (chatState === 6) {
+                chatState = 7; 
+                showTyping();
+                setTimeout(() => {
+                    hideTyping();
+                    // NEW AGENT MESSAGE 1: Confirmation
+                    addMessage(
+                        "You're all set. You now have access to NFL Sunday Ticket!",
+                        "agent"
+                    );
+                    chatState = 8; // Ready for Alex's second post-purchase reply (Thanks)
+                }, 1500); 
+            }
+            // State 8: User replies after confirmation (Thanks)
+            else if (chatState === 8) {
+                chatState = 9; 
+                showTyping();
+                setTimeout(() => {
+                    hideTyping();
+                    // NEW AGENT MESSAGE 2: Music Upsell (with linked URL)
+                    const musicUpsellMessage = "BTW, you're eligible for a promotional discount on YouTube Music Premium. You can add that here: <a href='https://music.youtube.com/music_premium' target='_blank'>https://goo.gl/MusicPremiumPromo</a>";
+                    addMessage(musicUpsellMessage, "agent");
+                    chatState = 10; // Demo complete
+                    // Optionally hide the input field here
                 }, 1500); 
             }
         });
 
-        // 4. Click Bottom Hotspot -> Show Human Agent Reply (HOTSPOT 2)
-        function showHumanReply() {
-            if (chatState === 6) {
-                chatState = 7; // Demo complete
-                hotspotBottom.style.display = 'none'; // Hide hotspot after use
-                
-                showTyping();
-                setTimeout(() => {
-                    hideTyping();
-                    addMessage(
-                        "Hey Alex! Sarah here. I see your question about sharing. Great news—you can create a Google Family Group and share your YouTube TV (including Sunday Ticket) with up to 5 family members. Can I get that Sunday Ticket added for you right now so you're all set for kickoff?",
-                        "agent"
-                    );
-                }, 1500); 
-            }
-        }
         
         updateAllClocks();
         setInterval(updateAllClocks, 10000); 
